@@ -1,6 +1,6 @@
 # Ansible Role: Composer on Centos 7
 
-Installs Composer, the PHP Dependency Manager, on Centos 7, using `getcomposer.org/installer` or epel repository
+Installs Composer, the PHP Dependency Manager, on Centos 7, using `getcomposer.org/installer`
 
 ## Requirements
 
