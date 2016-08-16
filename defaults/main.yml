@@ -19,7 +19,6 @@ composer_installer_checksum: e115a8dc7871f15d853148a7fbac7da27d6c0030b848d9b3dc0
 composer_installer_checksum_algorithm: sha384
 
 # Add the {{ composer_directory }} on system $PATH (true | false).
-# It will automatically check if the PATH exists, otherwise it will add it.
 composer_add_to_path: true
 
 # Remove Composer before the installation (true | false).

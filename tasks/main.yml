@@ -61,19 +61,15 @@
 
 - name: Add {{ composer_directory }} to path
   lineinfile:
-    dest: /etc/profile.d/local-bin.sh
+    dest: /etc/profile.d/composer.sh
     state: present
     create: yes
     line: "PATH=$PATH:{{ composer_directory }}"
-  when: "composer_directory not in ansible_env.PATH"
+  when: composer_add_to_path
 
-#- name: Check if Composer is working
-#  become: true
-#  become_user: vagrant
-#  composer:
-#    arguments: "--version"
-#    command: ""
-#    working_dir: ""
-#  register: composer_v
-#
-#- debug: var=composer_v
+- name: Check if Composer is working
+  composer:
+    arguments: "--version"
+    command: ""
+    working_dir: ""
+  changed_when: false # This will never report 'changed' status. But it will report 'ok', 'unreachable' or 'failed'
