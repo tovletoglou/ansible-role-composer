@@ -1,12 +1,14 @@
 ---
 
 - name: Remove Composer {{ composer_directory }}/composer
+  become: yes
   file:
     path: "{{ composer_directory }}/composer"
     state: absent
   when: composer_remove
 
 - name: Remove Composer temporary directory {{ composer_installer_path }}
+  become: yes
   file:
     path: "{{ composer_installer_path }}"
     state: absent
@@ -17,6 +19,7 @@
   register: composer_bin
 
 - name: Create Composer temporary directory {{ composer_installer_path }}
+  become: yes
   file:
     path: "{{ composer_installer_path }}"
     owner: "root"
@@ -25,6 +28,7 @@
   when: not composer_bin.stat.exists
 
 - name: Download Composer installer {{ composer_installer_path }}/composer-installer.php
+  become: yes
   get_url:
     url: https://getcomposer.org/installer
     dest: "{{ composer_installer_path }}/composer-installer.php"
@@ -33,12 +37,14 @@
   when: not composer_bin.stat.exists
 
 - name: Run Composer installer
+  become: yes
   command: >
     php composer-installer.php {% if composer_version != '' %} --version={{ composer_version }}{% endif %} --filename=composer
     chdir={{ composer_installer_path }}
   when: not composer_bin.stat.exists
 
 - name: Make Composer executable
+  become: yes
   file:
     path: "{{ composer_installer_path }}/composer"
     mode: a+x
@@ -46,6 +52,7 @@
   when: not composer_bin.stat.exists
 
 - name: Create Composer symlink {{ composer_directory }}/composer
+  become: yes
   file:
     src: "{{ composer_installer_path }}/composer"
     dest: "{{ composer_directory }}/composer"
@@ -53,6 +60,7 @@
   when: not composer_bin.stat.exists
 
 - name: Update Composer to latest version
+  become: yes
   shell: >
     php {{ composer_directory }}/composer self-update
   register: composer_update
@@ -60,6 +68,7 @@
   when: composer_keep_updated
 
 - name: Add {{ composer_directory }} to path
+  become: yes
   lineinfile:
     dest: /etc/profile.d/composer.sh
     state: present
