@@ -80,5 +80,5 @@
   composer:
     arguments: "--version"
     command: ""
-    working_dir: ""
+    working_dir: "/"
   changed_when: false # This will never report 'changed' status. But it will report 'ok', 'unreachable' or 'failed'
